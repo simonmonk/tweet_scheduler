@@ -1,7 +1,7 @@
 <script>
 
 function charactersleft(tweet) {
-    base = 140
+    base = 280
     // assume 1 url 22 and substract 23 for an image
     x = tweet.indexOf('http')
     y = tweet.indexOf(' ', x)
@@ -12,7 +12,8 @@ function charactersleft(tweet) {
 function display_chars_left() {
     var chars_div = document.getElementById("chars");
     var message = document.getElementById("txt").value;
-    chars_div.innerHTML = charactersleft(message)
+    //chars_div.innerHTML = charactersleft(message)
+    chars_div.innerHTML = String(message.length) + " (of 280)"
 }
     
 function set_image(image_name) {
@@ -52,7 +53,7 @@ end
 
   <div class="field">
     <div id="chars"></div>Status Text 
-    <%= f.text_area :status, rows: 3, cols: 50, id: "txt", onkeypress: "javascript:display_chars_left()"%> 
+    <%= f.text_area :status, rows: 6, cols: 50, id: "txt", onkeypress: "javascript:display_chars_left()"%> 
   </div>
 
   <div class="field">
@@ -140,8 +141,10 @@ tweets.each do | tweet |
 
 <h2>Twits</h2>
 
-@nostarch @OReillyMedia @TAB_DIY @monkmakes 
+@nostarch @OReillyMedia @TAB_DIY @monkmakes @ntoll 
 
 <h2>Tags</h2>
 
 #arduino #raspberry_pi #microbit #electronics #maker
+
+<hr/>
