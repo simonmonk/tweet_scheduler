@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170528075808) do
+ActiveRecord::Schema.define(version: 20190930102711) do
 
   create_table "tweets", force: :cascade do |t|
     t.string   "status"
@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 20170528075808) do
     t.datetime "scheduled_for"
     t.         "twitter_account_id"
     t.boolean  "scheduled",          default: false
+    t.string   "send_status"
   end
 
   create_table "twitter_accounts", force: :cascade do |t|

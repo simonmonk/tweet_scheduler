@@ -5,7 +5,7 @@ class Tweet < ApplicationRecord
     belongs_to :twitter_account
     
     def tweet()
-        puts "*********************** HERE ***************************"
+        failed = false
         acc = TwitterAccount.find(self.twitter_account_id)
         client = Twitter::REST::Client.new do |config|
             config.consumer_key        = acc.consumer_key
@@ -15,17 +15,30 @@ class Tweet < ApplicationRecord
         end
         
         if (self.image && self.image != '')
-            image_file = File.new("public/images/" + self.image)
-            puts image_file
-#            client.update_with_media(self.status, image_file)
+            begin
+                image_file = File.new("public/images/" + self.image)
+                puts image_file
+                client.update_with_media(self.status, image_file)
+            rescue Exception => e
+                self.send_status = "FAILED: " + e.to_s
+                failed = true
+            end
         else
-#            client.update(self.status)
+            begin
+                client.update(self.status)
+            rescue Exception => e
+                self.send_status = "FAILED: " + e.to_s
+                failed = true
+            end 
         end
-        if (not self.times_tweeted)
-            self.times_tweeted = 0
+        if (! failed)
+            if (not self.times_tweeted)
+                self.times_tweeted = 0
+            end
+            self.send_status = "Sent OK"
+            self.times_tweeted += 1
+            self.last_tweeted = Time.now()
         end
-        self.times_tweeted += 1
-        self.last_tweeted = Time.now()
         self.save
     end
     

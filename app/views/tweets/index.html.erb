@@ -2,19 +2,22 @@
 
 <h1>Tweets</h1>
 
+
 <table>
   <thead>
     <tr>
       <th>Account</th>
       <th>Status</th>
       <th>Scheduled</th>
+      <th>Send Status</th>
       <th>Last tweeted</th>
       <th colspan="3"></th>
     </tr>
   </thead>
 
   <tbody>
-    <% @tweets.each do |tweet| %>
+    <% @tweets.each do |tweet| 
+    %>
       <tr>
         <td><%= tweet.twitter_account.name %></td>          
         <td width="50%"><%= tweet.status %></td>
@@ -27,6 +30,7 @@
                 end
             %>
         </td>
+        <td><%= tweet.send_status %></td>
         <td><%= if (tweet.last_tweeted)
             distance_of_time_in_words(Time.now, tweet.last_tweeted) + " ago"
           else
