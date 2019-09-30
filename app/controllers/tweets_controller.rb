@@ -31,11 +31,12 @@ class TweetsController < ApplicationController
     
   def check
       # call on a 1 minute ping
-      # delay for 0.59 seconds before each send
+      # delay for 0..59 seconds before each send
       now = Time.now
       scheduled_tweets = Tweet.where("scheduled = ?", true)
       scheduled_tweets.each do | tweet |
           if (tweet.scheduled_for < now)
+              puts "Sending Tweet: " + tweet.id.to_s
               delay = rand(59)
               sleep(delay)
               tweet.tweet()
