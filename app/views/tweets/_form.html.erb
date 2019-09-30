@@ -28,6 +28,10 @@ if (not tweet.scheduled)
 end
 %>
 
+<table>
+<tr>
+
+<td>
 <%= form_for(tweet) do |f| %>
   <% if tweet.errors.any? %>
     <div id="error_explanation">
@@ -66,6 +70,11 @@ end
     Account
     <%= f.collection_select(:twitter_account_id, TwitterAccount.all, :id, :name) %>
   </div>
+
+  <div class="field">
+  Send Status
+  <%= @tweet.send_status %>
+  </div>
     
   <div>
     <%= f.label :scheduled %>
@@ -100,6 +109,30 @@ end
   <div class="actions">
     <%= f.submit %>
   </div>
+
+  </td>
+
+  <td> 
+  
+<table>
+<h1>Schedule</h1>
+<tr><td>Date</td><td>Tweet</td></tr>
+
+<%
+tweets = Tweet.all.order(scheduled_for: :asc)
+tweets.each do | tweet |
+  if (tweet.scheduled)
+%>
+<tr><td><%=tweet.scheduled_for%></td><td><a href="/tweets/<%=tweet.id%>/edit"><%=tweet.status%></a></tr>
+
+<% end end %>
+
+</table>
+
+  </td>
+
+  </tr>
+  </table>
 
 
     
