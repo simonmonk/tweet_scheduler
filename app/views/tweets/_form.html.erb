@@ -1,0 +1,120 @@
+<script>
+
+function charactersleft(tweet) {
+    base = 140
+    // assume 1 url 22 and substract 23 for an image
+    x = tweet.indexOf('http')
+    y = tweet.indexOf(' ', x)
+    url_len = Math.min(y-x, 22) // 22 for twitter shortened url
+    return base - url_len - (tweet.length - (y-x))
+}
+    
+function display_chars_left() {
+    var chars_div = document.getElementById("chars");
+    var message = document.getElementById("txt").value;
+    chars_div.innerHTML = charactersleft(message)
+}
+    
+function set_image(image_name) {
+    var image_field = document.getElementById("image_field");
+    image_field.value = image_name
+}
+
+</script>
+
+<%
+if (not tweet.scheduled)
+    tweet.scheduled_for = Time.now()
+end
+%>
+
+<%= form_for(tweet) do |f| %>
+  <% if tweet.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(tweet.errors.count, "error") %> prohibited this tweet from being saved:</h2>
+
+      <ul>
+      <% tweet.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+<table>
+<tr>
+<td>
+  <div class="field">
+    <div id="chars"></div>Status Text 
+    <%= f.text_area :status, rows: 3, cols: 50, id: "txt", onkeypress: "javascript:display_chars_left()"%> 
+  </div>
+
+  <div class="field">
+    <%= f.label :image%>
+    <%= f.text_field :image, id: 'image_field', size: 40  %>
+  </div>
+    
+  <div class="field">
+    <%= f.label :twitter_account_id %>
+    <%= f.number_field :twitter_account_id %>
+  </div>
+    
+  <div>
+    <%= f.label :scheduled %>
+    <%= f.check_box :scheduled %>
+  </div>
+
+  <div class="field">
+    Scheduled for (UTC)
+    <%= f.datetime_select :scheduled_for %>
+  </div>
+
+  <div class="field">
+    <%= f.label :times_tweeted %>
+    <%= @tweet.times_tweeted %>
+  </div>
+    
+  <div class="field">
+    <%= f.label :last_tweeted %>
+      <%= if (@tweet.last_tweeted)
+            distance_of_time_in_words(Time.now, @tweet.last_tweeted) + " ago"
+          else
+            "Never Tweeted"
+          end
+        %>
+  </div>
+
+  <div class="field">
+    <%= f.label :frequency %>
+    <%= f.number_field :frequency %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+
+  <div>
+      <%= link_to "Tweet Now as " + @tweet.twitter_account.name, tweet_path(@tweet)+"/tweet" %>
+  </div>
+    
+</td>
+<td>
+    <%
+    files = Dir["public/images/*"]
+    files.each do | file |
+        name = File.basename(file)
+    %>
+    
+    <img src="/images/<%= name %>" height="100" alt="<%=name%>" onclick='javascript:set_image("<%=name%>")'/>
+    
+    <%
+    end
+    %>
+    
+</td>    
+</tr>
+</table>
+
+ 
+<% end %>

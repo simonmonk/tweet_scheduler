@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @twitter_account.name %>
+</p>
+
+<p>
+  <strong>Consumer key:</strong>
+  <%= @twitter_account.consumer_key %>
+</p>
+
+<p>
+  <strong>Consumer secret:</strong>
+  <%= @twitter_account.consumer_secret %>
+</p>
+
+<p>
+  <strong>Access key:</strong>
+  <%= @twitter_account.access_key %>
+</p>
+
+<p>
+  <strong>Access secret:</strong>
+  <%= @twitter_account.access_secret %>
+</p>
+
+<%= link_to 'Edit', edit_twitter_account_path(@twitter_account) %> |
+<%= link_to 'Back', twitter_accounts_path %>

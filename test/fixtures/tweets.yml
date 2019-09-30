@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  status: MyString
+  image: MyString
+  last_tweeted: 2017-05-27 08:56:56
+  frequency: 1
+
+two:
+  status: MyString
+  image: MyString
+  last_tweeted: 2017-05-27 08:56:56
+  frequency: 1
