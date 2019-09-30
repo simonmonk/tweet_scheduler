@@ -16,7 +16,7 @@ class Tweet < ApplicationRecord
         
         if (self.image && self.image != '')
             begin
-                image_file = File.new("public/images/" + self.image)
+                image_file = File.new("~/tweet_scheduler/public/images/" + self.image)
                 puts image_file
                 client.update_with_media(self.status, image_file)
             rescue Exception => e
