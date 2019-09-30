@@ -59,15 +59,17 @@ class TweetsController < ApplicationController
   # PATCH/PUT /tweets/1
   # PATCH/PUT /tweets/1.json
   def update
-    respond_to do |format|
-      if @tweet.update(tweet_params)
-        format.html { redirect_to @tweet, notice: 'Tweet was successfully updated.' }
-        format.json { render :show, status: :ok, location: @tweet }
-      else
-        format.html { render :edit }
-        format.json { render json: @tweet.errors, status: :unprocessable_entity }
+    uploaded_io = params[:tweet][:new_image]
+    @tweet.update(tweet_params)
+    if (uploaded_io)
+      filename = Time.now.to_i.to_s + "_" + uploaded_io.original_filename
+      File.open(Rails.root.join('public', 'images', filename), 'wb') do |file|
+        file.write(uploaded_io.read)
       end
+      @tweet.image = filename
+      @tweet.save
     end
+    render :edit
   end
 
   # DELETE /tweets/1
@@ -88,6 +90,7 @@ class TweetsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def tweet_params
-      params.require(:tweet).permit(:status, :image, :last_tweeted, :frequency, :times_tweeted, :scheduled_for, :twitter_account_id, :scheduled)
+      params.require(:tweet).permit(:status, :image, :last_tweeted, :frequency, :times_tweeted, :scheduled_for, :twitter_account_id, 
+      :scheduled)
     end
 end

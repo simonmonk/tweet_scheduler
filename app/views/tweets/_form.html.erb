@@ -42,9 +42,10 @@ end
   <% end %>
 
 
-<table>
-<tr>
-<td>
+  <div class="field">
+        <image src="/images/<%=@tweet.image%>" width="600"/>
+  </div>
+
   <div class="field">
     <div id="chars"></div>Status Text 
     <%= f.text_area :status, rows: 3, cols: 50, id: "txt", onkeypress: "javascript:display_chars_left()"%> 
@@ -54,10 +55,16 @@ end
     <%= f.label :image%>
     <%= f.text_field :image, id: 'image_field', size: 40  %>
   </div>
+
+  <div class="field">
+    Image File
+    <%= f.file_field :new_image %>
+  </div>
+
     
   <div class="field">
-    <%= f.label :twitter_account_id %>
-    <%= f.number_field :twitter_account_id %>
+    Account
+    <%= f.collection_select(:twitter_account_id, TwitterAccount.all, :id, :name) %>
   </div>
     
   <div>
@@ -94,27 +101,8 @@ end
     <%= f.submit %>
   </div>
 
-  <div>
-      <%= link_to "Tweet Now as " + @tweet.twitter_account.name, tweet_path(@tweet)+"/tweet" %>
-  </div>
+
     
-</td>
-<td>
-    <%
-    files = Dir["public/images/*"]
-    files.each do | file |
-        name = File.basename(file)
-    %>
-    
-    <img src="/images/<%= name %>" height="100" alt="<%=name%>" onclick='javascript:set_image("<%=name%>")'/>
-    
-    <%
-    end
-    %>
-    
-</td>    
-</tr>
-</table>
 
  
 <% end %>

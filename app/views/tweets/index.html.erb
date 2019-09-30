@@ -35,6 +35,7 @@
         %></td>
         <td><%= link_to 'Edit', edit_tweet_path(tweet) %></td>
         <td><%= link_to 'Destroy', tweet, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to "Tweet Now as " + tweet.twitter_account.name, tweet_path(tweet)+"/tweet" %>
       </tr>
     <% end %>
   </tbody>
