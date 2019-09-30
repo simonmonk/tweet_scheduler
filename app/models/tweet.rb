@@ -20,14 +20,14 @@ class Tweet < ApplicationRecord
                 puts image_file
                 client.update_with_media(self.status, image_file)
             rescue Exception => e
-                self.send_status = "FAILED: " + e.to_s
+                self.send_status = "FAILED: " + Time.now() + e.to_s
                 failed = true
             end
         else
             begin
                 client.update(self.status)
             rescue Exception => e
-                self.send_status = "FAILED: " + e.to_s
+                self.send_status = "FAILED: " + Time.now() + e.to_s
                 failed = true
             end 
         end
