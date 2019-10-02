@@ -10,20 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190930102711) do
+ActiveRecord::Schema.define(version: 20191002091105) do
 
   create_table "tweets", force: :cascade do |t|
     t.string   "status"
     t.string   "image"
     t.datetime "last_tweeted"
     t.integer  "frequency"
-    t.datetime "created_at",                         null: false
-    t.datetime "updated_at",                         null: false
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
     t.integer  "times_tweeted"
     t.datetime "scheduled_for"
     t.         "twitter_account_id"
-    t.boolean  "scheduled",          default: false
+    t.boolean  "scheduled",              default: false
     t.string   "send_status"
+    t.integer  "num_tweets_before_stop"
   end
 
   create_table "twitter_accounts", force: :cascade do |t|

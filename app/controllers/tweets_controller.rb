@@ -40,7 +40,12 @@ class TweetsController < ApplicationController
               delay = rand(59)
               sleep(delay)
               tweet.tweet()
-              tweet.scheduled = false
+              # decide whether to schedule new tweet
+              if (tweet.frequency && tweet.frequency > 0)
+                tweet.scheduled_for = now + tweet.frequency + rand(3).days
+              else
+                tweet.scheduled = false
+              end
               tweet.save
           end
       end
@@ -92,6 +97,6 @@ class TweetsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def tweet_params
       params.require(:tweet).permit(:status, :image, :last_tweeted, :frequency, :times_tweeted, :scheduled_for, :twitter_account_id, 
-      :scheduled)
+      :scheduled, :num_tweets_before_stop)
     end
 end
