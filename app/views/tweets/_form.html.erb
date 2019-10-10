@@ -91,11 +91,6 @@ end
     <%= f.label :times_tweeted %>
     <%= @tweet.times_tweeted %>
   </div>
-
-  <div class="field">
-    <%= f.label :num_tweets_before_stop %>
-    <%= @tweet.num_tweets_before_stop %>
-  </div>
     
   <div class="field">
     <%= f.label :last_tweeted %>
@@ -110,6 +105,11 @@ end
   <div class="field">
     <%= f.label :frequency %>
     <%= f.number_field :frequency %>
+  </div>
+
+  <div class="field">
+    <%= f.label :num_tweets_before_stop %>
+    <%= f.number_field :num_tweets_before_stop %>
   </div>
 
   <div class="actions">
@@ -147,6 +147,7 @@ tweets.each do | tweet |
 <h2>Twits</h2>
 
 @nostarch @OReillyMedia @TAB_DIY @monkmakes @ntoll 
+@coolcomponents 
 
 <h2>Tags</h2>
 
